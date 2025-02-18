@@ -5,9 +5,8 @@ export async function POST(req) {
 
     try {
         const { message, history = [] } = await req.json();
-        const genAI = new GoogleGenerativeAI('AIzaSyARQFxNrfHzz54KW7EL9-l1RBnpMQsZjs4');
 
-        
+        const genAI = new GoogleGenerativeAI('AIzaSyARQFxNrfHzz54KW7EL9-l1RBnpMQsZjs4');
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
         
     
@@ -20,7 +19,7 @@ export async function POST(req) {
    
 
        
-        const result = await chat.sendMessage(message);
+        const result = await chat.sendMessage(`${message} habla como dominicano`);
         const botResponse = result.response.text();
 
 
