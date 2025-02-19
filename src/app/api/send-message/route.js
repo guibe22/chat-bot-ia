@@ -19,7 +19,7 @@ export async function POST(req) {
    
 
        
-        const result = await chat.sendMessage(`${message} habla como dominicano`);
+        const result = await chat.sendMessage(message);
         const botResponse = result.response.text();
 
 
