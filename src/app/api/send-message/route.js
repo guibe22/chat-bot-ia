@@ -5,7 +5,7 @@ export async function POST(req) {
         const { message, history = [] } = await req.json();
 
         const genAI = new GoogleGenerativeAI('AIzaSyARQFxNrfHzz54KW7EL9-l1RBnpMQsZjs4');
-        const model = genAI.getGenerativeModel({ model: "gemini-2.0-pro-exp-02-05" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b-exp-0827" });
 
         const chat = model.startChat({
             history: history.map(({ user, message }) => ({
