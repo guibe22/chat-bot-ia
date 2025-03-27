@@ -1,61 +1,131 @@
 "use client";
-import React from "react";
-import { MdChat, MdDelete } from "react-icons/md";
+import React, { useState } from "react";
+import { 
+  MdSettings, 
+  MdLightbulb,
+  MdCode,
+  MdDescription,
+  MdTranslate,
+  MdBarChart,
+  MdPalette,
+  MdHistory
+} from "react-icons/md";
 
 export default function Sidebar() {
-  const [conversations, setConversations] = React.useState([
-    { id: 1, title: "Nueva conversación" }
-  ]);
+  const [temperature, setTemperature] = useState(0.7);
+  const [selectedModel, setSelectedModel] = useState("gemini-1.5");
 
   return (
     <div className="w-64 h-full bg-gray-900 text-gray-200 flex flex-col border-r border-gray-700">
+      {/* Encabezado */}
       <div className="p-4 border-b border-gray-700">
-        <button
-          className="w-full border border-gray-600 rounded-md py-2 px-4 text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition"
-          onClick={() => {
-            setConversations(prev => [...prev, {
-              id: Date.now(),
-              title: `Conversación ${prev.length + 1}`
-            }]);
-          }}
-        >
-          <MdChat size={18} />
-          Nueva conversación
-        </button>
+        <h2 className="text-lg font-semibold flex items-center gap-2">
+          <MdPalette size={20} className="text-blue-400" />
+          Herramientas IA
+        </h2>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2">
-        {conversations.map(conv => (
-          <div
-            key={conv.id}
-            className="p-3 rounded-md hover:bg-gray-800 cursor-pointer flex justify-between items-center group"
-          >
-            <span className="truncate text-sm">{conv.title}</span>
-            <button
-              className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-white transition"
-              onClick={(e) => {
-                e.stopPropagation();
-                setConversations(prev => prev.filter(c => c.id !== conv.id));
-              }}
-            >
-              <MdDelete size={16} />
+      {/* Contenido principal */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-6">
+        {/* Sección de ejemplos rápidos */}
+        <div className="space-y-3">
+          <h3 className="text-xs font-semibold text-gray-400 flex items-center gap-2 uppercase tracking-wider">
+            <MdLightbulb size={14} />
+            Ejemplos Rápidos
+          </h3>
+          <div className="space-y-2">
+            <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
+              "Explica el concepto de machine learning"
+            </button>
+            <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
+              "Dame un ejemplo de código React"
+            </button>
+            <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
+              "Resume este artículo científico"
             </button>
           </div>
-        ))}
+        </div>
+
+        {/* Sección de configuración */}
+        <div className="space-y-3">
+          <h3 className="text-xs font-semibold text-gray-400 flex items-center gap-2 uppercase tracking-wider">
+            <MdSettings size={14} />
+            Configuración
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm mb-1">Modelo de IA</label>
+              <select 
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="gemini-1.5">Gemini 1.5</option>
+                <option value="gpt-4">GPT-4</option>
+                <option value="claude-3">Claude 3</option>
+              </select>
+            </div>
+
+            <div>
+              <div className="flex justify-between text-sm mb-1">
+                <span>Creatividad</span>
+                <span className="font-mono">{temperature.toFixed(1)}</span>
+              </div>
+              <input 
+                type="range" 
+                min="0" 
+                max="1" 
+                step="0.1" 
+                value={temperature}
+                onChange={(e) => setTemperature(parseFloat(e.target.value))}
+                className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+              />
+              <div className="flex justify-between text-xs text-gray-400 mt-1">
+                <span>Preciso</span>
+                <span>Creativo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sección de acciones */}
+        <div className="space-y-3">
+          <h3 className="text-xs font-semibold text-gray-400 flex items-center gap-2 uppercase tracking-wider">
+            <MdCode size={14} />
+            Acciones
+          </h3>
+          <div className="grid grid-cols-2 gap-2">
+            <button className="flex items-center gap-2 text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors justify-center">
+              <MdDescription size={16} />
+              Exportar
+            </button>
+            <button className="flex items-center gap-2 text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors justify-center">
+              <MdTranslate size={16} />
+              Traducir
+            </button>
+            <button className="flex items-center gap-2 text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors justify-center">
+              <MdHistory size={16} />
+              Historial
+            </button>
+            <button className="flex items-center gap-2 text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors justify-center">
+              <MdSettings size={16} />
+              Ajustes
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="p-4 border-t border-gray-700 text-sm text-gray-400">
-        <div className="flex items-center">
-          <div className="mr-3">
-            <img
-              src="https://www.ucne.edu/p/images/logoUCNE.png"
-              className="size-12 object-contain"
-              alt="Logo UCNE"
-            />
-          </div>
-          <div className="flex flex-col justify-center">
-            <p className="leading-tight">Universidad Católica Nordestana</p>
-            <p className="text-xs mt-1 leading-tight text-">Inteligencia Artificial</p>
+      {/* Footer */}
+      <div className="p-4 border-t border-gray-700">
+        <div className="flex items-center gap-3">
+          <img
+            src="https://www.ucne.edu/p/images/logoUCNE.png"
+            className="size-10 object-contain"
+            alt="Logo UCNE"
+          />
+          <div>
+            <p className="text-sm font-medium">UCNE</p>
+            <p className="text-xs text-gray-400">Inteligencia Artificial</p>
           </div>
         </div>
       </div>
