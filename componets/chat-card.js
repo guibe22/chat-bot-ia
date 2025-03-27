@@ -80,7 +80,7 @@ export default function ChatCard() {
     }, [messages]);
 
     return (
-        <div className="w-full flex-1 h-[90vh] max-w-4xl bg-white/80 backdrop-blur-md shadow-lg rounded-lg flex flex-col overflow-hidden">
+        <div className="w-full flex-1 h-[90vh] bg-white/80 backdrop-blur-md shadow-lg rounded-lg flex flex-col overflow-hidden">
             <HeaderChat setMessages={setMessages} />
             <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-100 w-full">
                 {messages.map((msg, index) => (
@@ -100,8 +100,6 @@ export default function ChatCard() {
                 sendMessage={sendMessage}
               
             />
-
-           
         </div>
     );
 }
