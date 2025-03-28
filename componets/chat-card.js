@@ -80,28 +80,39 @@ export default function ChatCard() {
     }, [messages]);
 
     return (
-        <div className="w-full flex-1 h-[90vh] max-w-4xl bg-white/80 backdrop-blur-md shadow-lg rounded-lg flex flex-col overflow-hidden">
+        <div className="w-full flex-1 h-[90vh] bg-white/80 backdrop-blur-md shadow-lg rounded-lg flex flex-col overflow-hidden">
             <HeaderChat setMessages={setMessages} />
-            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-100 w-full">
-                {messages.map((msg, index) => (
-                    <div key={index} className={`flex flex-col ${msg.user.id === user.id ? "items-end" : "items-start"}`}>
-                        <span className="text-xs text-gray-500 font-semibold mb-1">{msg.user.username}</span>
-                        <div className={`relative p-3 rounded-3xl max-w-[85%] break-words overflow-hidden ${msg.user.id === user.id ? "bg-blue-500 text-white rounded-tr-none" : "bg-white rounded-tl-none shadow-md"}`}>
-                            <Dialog isSender={msg.user.id === user.id}>{msg.message}</Dialog>
+            
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 bg-gray-100 w-full">
+                {messages.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
+                            AI
                         </div>
-                        <span className="text-xs flex flex-col mt-1 text-gray-500">{new Date(msg.timestamp).toLocaleDateString()}</span>
+                        <h2 className="text-xl font-semibold text-gray-700 mb-1">Asistente de IA</h2>
+                        <p className="text-gray-500">Envía un mensaje para comenzar</p>
                     </div>
-                ))}
-                {isTyping && <DotAnimation />}
+                ) : (
+                    <div className="space-y-3">
+                        {messages.map((msg, index) => (
+                            <div key={index} className={`flex flex-col ${msg.user.id === user.id ? "items-end" : "items-start"}`}>
+                                <span className="text-xs text-gray-500 font-semibold mb-1">{msg.user.username}</span>
+                                <div className={`relative p-3 rounded-3xl max-w-[85%] break-words ${msg.user.id === user.id ? "bg-blue-500 text-white rounded-tr-none" : "bg-white rounded-tl-none shadow-md"}`}>
+                                    <Dialog isSender={msg.user.id === user.id}>{msg.message}</Dialog>
+                                </div>
+                                <span className="text-xs mt-1 text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                            </div>
+                        ))}
+                        {isTyping && <DotAnimation />}
+                    </div>
+                )}
             </div>
+            
             <FooterCard  
                 setNewMessage={setNewMessage}
                 newMessage={newMessage}
                 sendMessage={sendMessage}
-              
             />
-
-           
         </div>
     );
 }
