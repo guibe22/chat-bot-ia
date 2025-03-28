@@ -13,7 +13,7 @@ import {
 
 export default function Sidebar() {
   const [temperature, setTemperature] = useState(0.7);
-  const [selectedModel, setSelectedModel] = useState("gemini-1.5");
+  const [selectedModel, setSelectedModel] = useState("Lev1-d");
 
   return (
     <div className="w-64 h-full bg-gray-900 text-gray-200 flex flex-col border-r border-gray-700">
@@ -35,13 +35,13 @@ export default function Sidebar() {
           </h3>
           <div className="space-y-2">
             <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
-              "Explica el concepto de machine learning"
+              "¿Qué pasa si me voy en rojo?"
             </button>
             <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
-              "Dame un ejemplo de código React"
+              "¿Puedo girar a la derecha con semáforo en rojo?"
             </button>
             <button className="w-full text-left text-sm p-3 hover:bg-gray-800 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
-              "Resume este artículo científico"
+              "¿Qué hacer si me multan sin razón?"
             </button>
           </div>
         </div>
@@ -60,15 +60,17 @@ export default function Sidebar() {
                 onChange={(e) => setSelectedModel(e.target.value)}
                 className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="gemini-1.5">Gemini 1.5</option>
-                <option value="gpt-4">GPT-4</option>
-                <option value="claude-3">Claude 3</option>
+                <option value="Lev-1d">Lev1-d</option>
+                <option value="Wil-b3">Wilb-3</option>
+                <option value="Gr3-y">Gr3-y</option>
+                <option value="L1sb-3">L1sb-3</option>
+                <option value="41b3-rt">41b3-rt</option>
               </select>
             </div>
 
             <div>
               <div className="flex justify-between text-sm mb-1">
-                <span>Creatividad</span>
+                <span>Poder de procesamiento</span>
                 <span className="font-mono">{temperature.toFixed(1)}</span>
               </div>
               <input 
@@ -81,8 +83,8 @@ export default function Sidebar() {
                 className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
               <div className="flex justify-between text-xs text-gray-400 mt-1">
-                <span>Preciso</span>
-                <span>Creativo</span>
+                <span>Bajo</span>
+                <span>Alto</span>
               </div>
             </div>
           </div>
