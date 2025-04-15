@@ -30,13 +30,13 @@ export default function ChatCard() {
     };
 
     const sendMessage = async () => {
+        if (!newMessage.trim()) return;
 
         const userMessage = {
             user: { id: 1, username: "user" },
             message: newMessage,
             timestamp: new Date().toISOString(),
         };
-
 
         setMessages((prevMessages) => {
             const newMessages = [...prevMessages, userMessage];
@@ -48,7 +48,7 @@ export default function ChatCard() {
         setIsTyping(true); 
 
         try {
-            const  response = await axios.post("/api/send-message", {
+            const response = await axios.post("/api/send-message", {
                 message: newMessage,
                 history: messages,
             });
@@ -58,7 +58,6 @@ export default function ChatCard() {
                     message: response.data.response || "[Imagen Generada]",
                     timestamp: new Date().toISOString()
                 };
-
                 
                 setMessages((prevMessages) => {
                     const newMessages = [...prevMessages, botMessage];
@@ -69,7 +68,7 @@ export default function ChatCard() {
         } catch (error) {
             console.error("Error al obtener respuesta del chatbot:", error);
         } finally {
-            setIsTyping(false); // Ocultar el indicador de "escribiendo"
+            setIsTyping(false);
         }
     };
 
@@ -80,10 +79,10 @@ export default function ChatCard() {
     }, [messages]);
 
     return (
-        <div className="w-full flex-1 h-[90vh] bg-white/80 backdrop-blur-md shadow-lg rounded-lg flex flex-col overflow-hidden">
+        <div className="w-full h-full flex flex-col overflow-hidden">
             <HeaderChat setMessages={setMessages} />
             
-            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 bg-gray-100 w-full">
+            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-2 md:p-4 bg-gray-100 w-full">
                 {messages.length === 0 ? (
                     <div className="h-full flex flex-col items-center justify-center">
                         <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4">
@@ -97,7 +96,7 @@ export default function ChatCard() {
                         {messages.map((msg, index) => (
                             <div key={index} className={`flex flex-col ${msg.user.id === user.id ? "items-end" : "items-start"}`}>
                                 <span className="text-xs text-gray-500 font-semibold mb-1">{msg.user.username}</span>
-                                <div className={`relative p-3 rounded-3xl max-w-[85%] break-words ${msg.user.id === user.id ? "bg-blue-500 text-white rounded-tr-none" : "bg-white rounded-tl-none shadow-md"}`}>
+                                <div className={`relative p-2 md:p-3 rounded-3xl max-w-[95%] md:max-w-[85%] break-words ${msg.user.id === user.id ? "bg-blue-500 text-white rounded-tr-none" : "bg-white rounded-tl-none shadow-md"}`}>
                                     <Dialog isSender={msg.user.id === user.id}>{msg.message}</Dialog>
                                 </div>
                                 <span className="text-xs mt-1 text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
