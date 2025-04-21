@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 export default function HeaderChat({ setMessages }) {
     return (
         <div className="bg-white p-4 flex justify-between items-center shadow-sm">
-            <h2 className="text-lg font-semibold">Asistente de IA</h2>
+            <h2 className="text-lg font-semibold">VICTOR BOT</h2>
             <button
                 onClick={() => {
                     if (confirm("¿Estás seguro de borrar el historial de esta conversación?")) {
