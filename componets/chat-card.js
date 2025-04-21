@@ -80,53 +80,50 @@ export default function ChatCard() {
 
     return (
         <div className="w-full h-screen flex flex-col">
-            <HeaderChat setMessages={setMessages} />
-
-            {/* Chat Scrollable Area */}
-            <div className="flex-1 overflow-hidden pb-20">  {/* Agregamos un padding-bottom para dejar espacio al footer */}
-                <div ref={chatContainerRef} className="h-full overflow-y-auto p-2 md:p-4 bg-gray-100 w-full">
-                    {messages.length === 0 ? (
-                        <div className="h-full flex flex-col items-center justify-center">
-
-                            <img
-                                src="/victorbot.png"
-                                className="size-40"
-                            />
-
-                            <h2 className="text-xl font-semibold text-gray-700 mb-1">VICTOR BOT</h2>
-                            <p className="text-gray-500">Envía un mensaje para comenzar</p>
-                        </div>
-                    ) : (
-                        <div className="space-y-3">
-                            {messages.map((msg, index) => (
-                                <div key={index} className={`flex flex-col ${msg.user.id === user.id ? "items-end" : "items-start"}`}>
-                                    <span className="text-xs text-gray-500 font-semibold mb-1">{msg.user.username}</span>
-                                    <div
-                                        className={`relative p-2 md:p-3 rounded-3xl max-w-[95%] md:max-w-[85%] break-words ${msg.user.id === user.id
-                                            ? "bg-blue-500 text-white rounded-tr-none"
-                                            : "bg-white rounded-tl-none shadow-md"
-                                            }`}
-                                    >
-                                        <Dialog isSender={msg.user.id === user.id}>{msg.message}</Dialog>
-                                    </div>
-                                    <span className="text-xs mt-1 text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+        <HeaderChat setMessages={setMessages} />
+    
+        {/* Chat Scrollable Area */}
+        <div className="flex-1 overflow-hidden md:pb-20 pb-12"> {/* Ajustamos el padding para que no se cubra en móviles */}
+            <div ref={chatContainerRef} className="h-full overflow-y-auto p-2 md:p-4 bg-gray-100 w-full">
+                {messages.length === 0 ? (
+                    <div className="h-full flex flex-col items-center justify-center">
+                        <img
+                            src="/victorbot.png"
+                            className="size-40"
+                        />
+                        <h2 className="text-xl font-semibold text-gray-700 mb-1">VICTOR BOT</h2>
+                        <p className="text-gray-500">Envía un mensaje para comenzar</p>
+                    </div>
+                ) : (
+                    <div className="space-y-3">
+                        {messages.map((msg, index) => (
+                            <div key={index} className={`flex flex-col ${msg.user.id === user.id ? "items-end" : "items-start"}`}>
+                                <span className="text-xs text-gray-500 font-semibold mb-1">{msg.user.username}</span>
+                                <div
+                                    className={`relative p-2 md:p-3 rounded-3xl max-w-[95%] md:max-w-[85%] break-words ${msg.user.id === user.id
+                                        ? "bg-blue-500 text-white rounded-tr-none"
+                                        : "bg-white rounded-tl-none shadow-md"
+                                        }`}
+                                >
+                                    <Dialog isSender={msg.user.id === user.id}>{msg.message}</Dialog>
                                 </div>
-                            ))}
-                            {isTyping && <DotAnimation />}
-                        </div>
-                    )}
-                </div>
-            </div>
-
-
-            <div className="h-20 border-t bg-white mb-6">
-                <FooterCard
-                    setNewMessage={setNewMessage}
-                    newMessage={newMessage}
-                    sendMessage={sendMessage}
-                />
+                                <span className="text-xs mt-1 text-gray-500">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                            </div>
+                        ))}
+                        {isTyping && <DotAnimation />}
+                    </div>
+                )}
             </div>
         </div>
+    
+        <div className="sticky bottom-0 w-full border-t bg-white mb-6 z-10">
+            <FooterCard
+                setNewMessage={setNewMessage}
+                newMessage={newMessage}
+                sendMessage={sendMessage}
+            />
+        </div>
+    </div>
 
     );
 }
